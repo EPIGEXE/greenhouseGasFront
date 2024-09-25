@@ -84,7 +84,7 @@ export function BarChartCard() {
               cursor={true}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="value" fill="var(--color-desktop)" radius={8} activeBar={<Rectangle fillOpacity={0.8} />}>
+            <Bar dataKey="value" fill="var(--color-desktop)" radius={8} activeBar={<Rectangle fillOpacity={0.8}/>}>
               <LabelList
                 position="top"
                 offset={12}

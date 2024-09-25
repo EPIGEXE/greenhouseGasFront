@@ -3,7 +3,7 @@ import './App.css'
 import { TooltipProvider } from './components/ui/tooltip';
 import Sidebar from './components/test/Sidebar';
 import { BarChartCard } from './components/test/BarChartCard';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
+import { CircleChartCard } from './components/test/CircleChartCard';
 
 
 function App() {
@@ -33,15 +33,7 @@ function App() {
                 </div> */}
                 <div className='flex-1 grid grid-cols-2 gap-4'>
                   <BarChartCard />
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Card Title</CardTitle>
-                      <CardDescription>Card Description</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p>Card Content</p>
-                    </CardContent>
-                  </Card>
+                  <CircleChartCard />
                 </div>
 
               </div>

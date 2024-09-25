@@ -21,7 +21,7 @@ const Sidebar = ({isCollapsed, setIsCollapsed}: SidebarProps) => {
             ${isCollapsed ? 'w-1/12' : 'w-1/6'} 
             border-r border-side-nav
         `}
-        > {/* 변경 */}
+        >
         <div className='flex items-center justify-between p-2'>
             <Button variant="destructive" onClick={() => setIsCollapsed(!isCollapsed)} className="w-full">Toggle</Button>
         </div>
