@@ -1,7 +1,8 @@
 "use client"
 
+import { useLocation } from "react-router-dom";
 import { LucideIcon } from "lucide-react"
-
+import { Link } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {
@@ -9,11 +10,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useEffect, useState } from "react"
 
 interface NavProps {
   isCollapsed: boolean
   links: {
     title: string
+    to: string
     label?: string
     icon: LucideIcon
     variant: "default" | "ghost"
@@ -21,6 +24,18 @@ interface NavProps {
 }
 
 export function Nav({ links, isCollapsed }: NavProps) {
+  const [activeMenu, setActiveMenu] = useState('');
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    console.log(currentPath);
+    const activeMenu = links.find(link => link.to === currentPath);
+    if(activeMenu) {
+      setActiveMenu(activeMenu.to);
+    }
+  }, [location, links])
+
   return (
     <div
       data-collapsed={isCollapsed}
@@ -31,18 +46,22 @@ export function Nav({ links, isCollapsed }: NavProps) {
           isCollapsed ? (
             <Tooltip key={index} delayDuration={0}>
               <TooltipTrigger asChild>
-                <div
-                  href="#"
+                <Link 
+                  to={link.to}
+                  onClick={() => setActiveMenu(link.to)}
                   className={cn(
-                    buttonVariants({ variant: link.variant, size: "icon" }),
+                    buttonVariants({ 
+                      variant: activeMenu === link.to ? "default" : "ghost", 
+                      size: "icon" 
+                    }),
                     "h-9 w-9",
-                    link.variant === "default" &&
+                    activeMenu === link.to &&
                       "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
                   )}
                 >
                   <link.icon className="h-4 w-4" />
                   <span className="sr-only">{link.title}</span>
-                </div>
+                </Link>
               </TooltipTrigger>
               <TooltipContent side="right" className="flex items-center gap-4">
                 {link.title}
@@ -54,12 +73,15 @@ export function Nav({ links, isCollapsed }: NavProps) {
               </TooltipContent>
             </Tooltip>
           ) : (
-            <div
-              key={index}
-              href="#"
+            <Link
+              to={link.to}
+              onClick={() => setActiveMenu(link.to)}
               className={cn(
-                buttonVariants({ variant: link.variant, size: "sm" }),
-                link.variant === "default" &&
+                buttonVariants({ 
+                      variant: activeMenu === link.to ? "default" : "ghost", 
+                      size: "sm" 
+                    }),
+                activeMenu === link.to &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
                 "justify-start"
               )}
@@ -77,7 +99,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                   {link.label}
                 </span>
               )}
-            </div>
+            </Link>
           )
         )}
       </nav>
